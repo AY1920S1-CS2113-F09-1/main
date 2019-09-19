@@ -38,13 +38,4 @@ class Deadline extends Task {
         }
     }
 
-    // -- Setters & Getters
-
-    /**
-     * Getter for datetime.
-     * @return Datetime stored in this Deadline Object
-     */
-    public Date getDatetime() {
-        return datetime;
-    }
 }

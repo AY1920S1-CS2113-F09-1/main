@@ -25,7 +25,8 @@ public class ToDo extends Task {
         }
     }
 
-    private void parseForTaskPeriod() throws DukeException {
+    private void parseForTaskPeriod() throws DukeException
+    {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
         if (this.detailDesc == null) {
             return;

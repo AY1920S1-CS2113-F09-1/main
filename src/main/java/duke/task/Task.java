@@ -12,6 +12,7 @@ public class Task {
     public Boolean isDone = false;
     private TaskList queuedTasks = null;
 
+
     /**
      * Constructor for the 'Task' Class.
      *

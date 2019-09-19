@@ -80,6 +80,9 @@ public class TaskList {
         case TODO:
             newTask = new ToDo(taskDesc);
             break;
+        case RECUR:
+            newTask = new Recur(taskDesc);
+            break;
         default:
             newTask = new Task(taskDesc);
             break;
