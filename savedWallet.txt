@@ -1,0 +1,3 @@
+out $5.0 /date 2019-11-04 /tags food
+out $4.0 /date 2019-10-03 /tags food
+out $3.0 /date 2018-12-17 /tags trans

@@ -1,5 +1,6 @@
 package executor.command;
 
+import duke.exception.DukeException;
 import executor.task.TaskList;
 import interpreter.Parser;
 import ui.ReceiptTracker;
@@ -26,18 +27,33 @@ public class CommandGetSpendingByMonth extends Command {
 
     @Override
     public void execute(Wallet wallet) {
-        ReceiptTracker receiptsInMonth = new ReceiptTracker();
-        String monthStr = Parser.parseForPrimaryInput(CommandType.EXPENDEDMONTH, userInput);
-        int month = monthStrToInt(monthStr);
-        if (month != 0) {
-            int year = Integer.parseInt(Parser.parseForFlag("year", userInput));
+        try {
+            ReceiptTracker receiptsInMonth = new ReceiptTracker();
+            String monthStr = Parser.parseForPrimaryInput(CommandType.EXPENDEDMONTH, userInput);
+            int month = monthStrToInt(monthStr);
+            String yearStr = Parser.parseForFlag("year", userInput);
+
+            if (month == 0) {
+                System.out.println("Wrong month input. Check Spelling");
+                return;
+            }
+
+            if (yearStr.length() != 4) {
+                System.out.println("Wrong year input. Must be 4 digits, i.e. 2019");
+                return;
+            }
+
+            int year = Integer.parseInt(yearStr);
             receiptsInMonth = wallet.getReceipts().findReceiptByMonthYear(month, year);
             Double totalMoney = receiptsInMonth.getTotalCashSpent();
-            Ui.dukeSays("The total amount of money spent in " + monthStr + " " + year + " : " + totalMoney);
-        } else {
-            Ui.dukeSays("Invalid input, CORRECT FORMAT : expendedmonth <month> <year> ");
+            Ui.dukeSays("The total amount of money spent in " + monthStr + " " + year + " : $" + totalMoney);
+
+        }
+        catch (Exception e) {
+            System.out.println("Wrong input. CORRECT FORMAT : expendedmonth <month> /year <year>");
         }
     }
+
 
     /**
      * Returns the corresponding month value.
