@@ -1,5 +1,6 @@
 package executor.command;
 
+import duke.exception.DukeException;
 import executor.task.TaskList;
 import interpreter.Parser;
 import ui.ReceiptTracker;
@@ -30,12 +31,22 @@ public class CommandDateList extends Command {
 
     @Override
     public void execute(Wallet wallet) {
-        ReceiptTracker dateReceipts = wallet.getReceipts().findReceiptsByDate(this.date);
-        Ui.dukeSays("You have the following receipts for" + " " + date);
-        Ui.printSeparator();
-        dateReceipts.printReceipts();
-        Ui.printSeparator();
+        try {
+            ReceiptTracker dateReceipts = new ReceiptTracker();
+            dateReceipts = wallet.getReceipts().findReceiptsByDate(this.date);
+            if (this.date.isEmpty()) {
+                Ui.dukeSays("No date input detected. FORMAT : datelist yyyy/mm/dd");
+                return;
+            }
+            Ui.dukeSays("You have the following receipts for" + " " + date);
+            Ui.printSeparator();
+            dateReceipts.printReceipts();
+            Ui.printSeparator();
+        } catch (Exception e) {
+            Ui.dukeSays("Wrong format. FORMAT : datelist yyyy/mm/dd");
+        }
     }
-
 }
+
+
 

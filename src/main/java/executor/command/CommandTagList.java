@@ -11,8 +11,10 @@ public class CommandTagList extends CommandList {
     private String tag;
 
     //Constructor
+
     /**
      * Constructor for CommandListTag subCommand Class.
+     *
      * @param userInput The user input from the CLI
      */
     public CommandTagList(String userInput) {
@@ -29,19 +31,26 @@ public class CommandTagList extends CommandList {
     }
 
     @Override
-       public void execute(Wallet wallet) {
-        ReceiptTracker taggedReceipts = wallet.getReceipts().findReceiptsByTag(this.tag);
-        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
-        Ui.dukeSays("You spent a total of $"
-                +
-                decimalFormat.format(taggedReceipts.getTotalCashSpent())
-                + " "
-                + "on"
-                + " "
-                + tag
-        );
-        Ui.printSeparator();
-        taggedReceipts.printReceipts();
-        Ui.printSeparator();
+    public void execute(Wallet wallet) {
+        try {
+            ReceiptTracker taggedReceipts = wallet.getReceipts().findReceiptsByTag(this.tag);
+            if (this.tag.isEmpty()) {
+                Ui.dukeSays("No tag input detected. FORMAT : taglist <tag>");
+            }
+            DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+            Ui.dukeSays("You spent a total of $"
+                    +
+                    decimalFormat.format(taggedReceipts.getTotalCashSpent())
+                    + " "
+                    + "on"
+                    + " "
+                    + tag
+            );
+            Ui.printSeparator();
+            taggedReceipts.printReceipts();
+            Ui.printSeparator();
+        } catch (Exception e) {
+            Ui.dukeSays("Wrong format. FORMAT: taglist <tag>");
+        }
     }
 }
